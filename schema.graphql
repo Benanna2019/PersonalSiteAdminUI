@@ -1,0 +1,1349 @@
+type User {
+  id: ID!
+  name: String
+  email: String
+  password: PasswordState
+  posts(
+    where: PostWhereInput! = {}
+    search: String
+    sortBy: [SortPostsBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [PostOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): [Post!]
+  _postsMeta(
+    where: PostWhereInput! = {}
+    search: String
+    sortBy: [SortPostsBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [PostOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use postsCount instead."
+    )
+  postsCount(where: PostWhereInput! = {}): Int
+  events: Event
+  role: Role
+}
+
+type PasswordState {
+  isSet: Boolean!
+}
+
+type _QueryMeta {
+  count: Int
+}
+
+input UserWhereInput {
+  AND: [UserWhereInput!]
+  OR: [UserWhereInput!]
+  id: ID
+  id_not: ID
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  name: String
+  name_not: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  name_i: String
+  name_not_i: String
+  name_contains_i: String
+  name_not_contains_i: String
+  name_starts_with_i: String
+  name_not_starts_with_i: String
+  name_ends_with_i: String
+  name_not_ends_with_i: String
+  name_in: [String]
+  name_not_in: [String]
+  email: String
+  email_not: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
+  email_i: String
+  email_not_i: String
+  email_contains_i: String
+  email_not_contains_i: String
+  email_starts_with_i: String
+  email_not_starts_with_i: String
+  email_ends_with_i: String
+  email_not_ends_with_i: String
+  email_in: [String]
+  email_not_in: [String]
+  password_is_set: Boolean
+  posts_every: PostWhereInput
+  posts_some: PostWhereInput
+  posts_none: PostWhereInput
+  events: EventWhereInput
+  events_is_null: Boolean
+  role: RoleWhereInput
+  role_is_null: Boolean
+}
+
+input UserWhereUniqueInput {
+  id: ID
+  email: String
+}
+
+enum SortUsersBy {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  email_ASC
+  email_DESC
+}
+
+input UserOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  email: OrderDirection
+}
+
+enum OrderDirection {
+  asc
+  desc
+}
+
+input UserUpdateInput {
+  name: String
+  email: String
+  password: String
+  posts: PostRelateToManyInput
+  events: EventRelateToOneInput
+  role: RoleRelateToOneInput
+}
+
+input PostRelateToManyInput {
+  create: [PostCreateInput]
+  connect: [PostWhereUniqueInput]
+  disconnect: [PostWhereUniqueInput]
+  disconnectAll: Boolean
+}
+
+input EventRelateToOneInput {
+  create: EventCreateInput
+  connect: EventWhereUniqueInput
+  disconnect: EventWhereUniqueInput
+  disconnectAll: Boolean
+}
+
+input RoleRelateToOneInput {
+  create: RoleCreateInput
+  connect: RoleWhereUniqueInput
+  disconnect: RoleWhereUniqueInput
+  disconnectAll: Boolean
+}
+
+input UsersUpdateInput {
+  id: ID!
+  data: UserUpdateInput
+}
+
+input UserCreateInput {
+  name: String
+  email: String
+  password: String
+  posts: PostRelateToManyInput
+  events: EventRelateToOneInput
+  role: RoleRelateToOneInput
+}
+
+input UsersCreateInput {
+  data: UserCreateInput
+}
+
+type Post {
+  id: ID!
+  title: String
+  status: String
+  photo: PostImage
+  content: Post_content_DocumentField
+  publishDate: String
+  author: User
+  tags(
+    where: TagWhereInput! = {}
+    search: String
+    sortBy: [SortTagsBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [TagOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): [Tag!]
+  _tagsMeta(
+    where: TagWhereInput! = {}
+    search: String
+    sortBy: [SortTagsBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [TagOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use tagsCount instead."
+    )
+  tagsCount(where: TagWhereInput! = {}): Int
+}
+
+type Post_content_DocumentField {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+input PostWhereInput {
+  AND: [PostWhereInput!]
+  OR: [PostWhereInput!]
+  id: ID
+  id_not: ID
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  title: String
+  title_not: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  title_i: String
+  title_not_i: String
+  title_contains_i: String
+  title_not_contains_i: String
+  title_starts_with_i: String
+  title_not_starts_with_i: String
+  title_ends_with_i: String
+  title_not_ends_with_i: String
+  title_in: [String]
+  title_not_in: [String]
+  status: String
+  status_not: String
+  status_in: [String]
+  status_not_in: [String]
+  photo: PostImageWhereInput
+  photo_is_null: Boolean
+  publishDate: String
+  publishDate_not: String
+  publishDate_lt: String
+  publishDate_lte: String
+  publishDate_gt: String
+  publishDate_gte: String
+  publishDate_in: [String]
+  publishDate_not_in: [String]
+  author: UserWhereInput
+  author_is_null: Boolean
+  tags_every: TagWhereInput
+  tags_some: TagWhereInput
+  tags_none: TagWhereInput
+}
+
+input PostWhereUniqueInput {
+  id: ID
+}
+
+enum SortPostsBy {
+  id_ASC
+  id_DESC
+  title_ASC
+  title_DESC
+  status_ASC
+  status_DESC
+  publishDate_ASC
+  publishDate_DESC
+}
+
+input PostOrderByInput {
+  id: OrderDirection
+  title: OrderDirection
+  status: OrderDirection
+  publishDate: OrderDirection
+}
+
+input PostUpdateInput {
+  title: String
+  status: String
+  photo: PostImageRelateToOneInput
+  content: JSON
+  publishDate: String
+  author: UserRelateToOneInput
+  tags: TagRelateToManyInput
+}
+
+input PostImageRelateToOneInput {
+  create: PostImageCreateInput
+  connect: PostImageWhereUniqueInput
+  disconnect: PostImageWhereUniqueInput
+  disconnectAll: Boolean
+}
+
+input UserRelateToOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  disconnect: UserWhereUniqueInput
+  disconnectAll: Boolean
+}
+
+input TagRelateToManyInput {
+  create: [TagCreateInput]
+  connect: [TagWhereUniqueInput]
+  disconnect: [TagWhereUniqueInput]
+  disconnectAll: Boolean
+}
+
+input PostsUpdateInput {
+  id: ID!
+  data: PostUpdateInput
+}
+
+input PostCreateInput {
+  title: String
+  status: String
+  photo: PostImageRelateToOneInput
+  content: JSON
+  publishDate: String
+  author: UserRelateToOneInput
+  tags: TagRelateToManyInput
+}
+
+input PostsCreateInput {
+  data: PostCreateInput
+}
+
+type Tag {
+  id: ID!
+  name: String
+  posts(
+    where: PostWhereInput! = {}
+    search: String
+    sortBy: [SortPostsBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [PostOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): [Post!]
+  _postsMeta(
+    where: PostWhereInput! = {}
+    search: String
+    sortBy: [SortPostsBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [PostOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use postsCount instead."
+    )
+  postsCount(where: PostWhereInput! = {}): Int
+  events(
+    where: EventWhereInput! = {}
+    search: String
+    sortBy: [SortEventsBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [EventOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): [Event!]
+  _eventsMeta(
+    where: EventWhereInput! = {}
+    search: String
+    sortBy: [SortEventsBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [EventOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use eventsCount instead."
+    )
+  eventsCount(where: EventWhereInput! = {}): Int
+}
+
+input TagWhereInput {
+  AND: [TagWhereInput!]
+  OR: [TagWhereInput!]
+  id: ID
+  id_not: ID
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  name: String
+  name_not: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  name_i: String
+  name_not_i: String
+  name_contains_i: String
+  name_not_contains_i: String
+  name_starts_with_i: String
+  name_not_starts_with_i: String
+  name_ends_with_i: String
+  name_not_ends_with_i: String
+  name_in: [String]
+  name_not_in: [String]
+  posts_every: PostWhereInput
+  posts_some: PostWhereInput
+  posts_none: PostWhereInput
+  events_every: EventWhereInput
+  events_some: EventWhereInput
+  events_none: EventWhereInput
+}
+
+input TagWhereUniqueInput {
+  id: ID
+}
+
+enum SortTagsBy {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
+
+input TagOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+}
+
+input TagUpdateInput {
+  name: String
+  posts: PostRelateToManyInput
+  events: EventRelateToManyInput
+}
+
+input EventRelateToManyInput {
+  create: [EventCreateInput]
+  connect: [EventWhereUniqueInput]
+  disconnect: [EventWhereUniqueInput]
+  disconnectAll: Boolean
+}
+
+input TagsUpdateInput {
+  id: ID!
+  data: TagUpdateInput
+}
+
+input TagCreateInput {
+  name: String
+  posts: PostRelateToManyInput
+  events: EventRelateToManyInput
+}
+
+input TagsCreateInput {
+  data: TagCreateInput
+}
+
+type PostImage {
+  id: ID!
+  image: CloudinaryImage_File
+  altText: String
+  post: Post
+}
+
+type CloudinaryImage_File {
+  id: ID
+  filename: String
+  originalFilename: String
+  mimetype: String
+  encoding: String
+  publicUrl: String
+  publicUrlTransformed(transformation: CloudinaryImageFormat): String
+}
+
+"""
+Mirrors the formatting options [Cloudinary provides](https://cloudinary.com/documentation/image_transformation_reference).
+All options are strings as they ultimately end up in a URL.
+"""
+input CloudinaryImageFormat {
+  """
+   Rewrites the filename to be this pretty string. Do not include `/` or `.`
+  """
+  prettyName: String
+  width: String
+  height: String
+  crop: String
+  aspect_ratio: String
+  gravity: String
+  zoom: String
+  x: String
+  y: String
+  format: String
+  fetch_format: String
+  quality: String
+  radius: String
+  angle: String
+  effect: String
+  opacity: String
+  border: String
+  background: String
+  overlay: String
+  underlay: String
+  default_image: String
+  delay: String
+  color: String
+  color_space: String
+  dpr: String
+  page: String
+  density: String
+  flags: String
+  transformation: String
+}
+
+input PostImageWhereInput {
+  AND: [PostImageWhereInput!]
+  OR: [PostImageWhereInput!]
+  id: ID
+  id_not: ID
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  image: String
+  image_not: String
+  image_in: [String]
+  image_not_in: [String]
+  altText: String
+  altText_not: String
+  altText_contains: String
+  altText_not_contains: String
+  altText_starts_with: String
+  altText_not_starts_with: String
+  altText_ends_with: String
+  altText_not_ends_with: String
+  altText_i: String
+  altText_not_i: String
+  altText_contains_i: String
+  altText_not_contains_i: String
+  altText_starts_with_i: String
+  altText_not_starts_with_i: String
+  altText_ends_with_i: String
+  altText_not_ends_with_i: String
+  altText_in: [String]
+  altText_not_in: [String]
+  post: PostWhereInput
+  post_is_null: Boolean
+}
+
+input PostImageWhereUniqueInput {
+  id: ID
+}
+
+enum SortPostImagesBy {
+  id_ASC
+  id_DESC
+  altText_ASC
+  altText_DESC
+}
+
+input PostImageOrderByInput {
+  id: OrderDirection
+  altText: OrderDirection
+}
+
+input PostImageUpdateInput {
+  image: Upload
+  altText: String
+  post: PostRelateToOneInput
+}
+
+"""
+The `Upload` scalar type represents a file upload.
+"""
+scalar Upload
+
+input PostRelateToOneInput {
+  create: PostCreateInput
+  connect: PostWhereUniqueInput
+  disconnect: PostWhereUniqueInput
+  disconnectAll: Boolean
+}
+
+input PostImagesUpdateInput {
+  id: ID!
+  data: PostImageUpdateInput
+}
+
+input PostImageCreateInput {
+  image: Upload
+  altText: String
+  post: PostRelateToOneInput
+}
+
+input PostImagesCreateInput {
+  data: PostImageCreateInput
+}
+
+type Event {
+  id: ID!
+  title: String
+  status: String
+  photo: EventImage
+  content: Event_content_DocumentField
+  publishDate: String
+  eventDate: String
+  author: User
+  tags(
+    where: TagWhereInput! = {}
+    search: String
+    sortBy: [SortTagsBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [TagOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): [Tag!]
+  _tagsMeta(
+    where: TagWhereInput! = {}
+    search: String
+    sortBy: [SortTagsBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [TagOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use tagsCount instead."
+    )
+  tagsCount(where: TagWhereInput! = {}): Int
+}
+
+type Event_content_DocumentField {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+input EventWhereInput {
+  AND: [EventWhereInput!]
+  OR: [EventWhereInput!]
+  id: ID
+  id_not: ID
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  title: String
+  title_not: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  title_i: String
+  title_not_i: String
+  title_contains_i: String
+  title_not_contains_i: String
+  title_starts_with_i: String
+  title_not_starts_with_i: String
+  title_ends_with_i: String
+  title_not_ends_with_i: String
+  title_in: [String]
+  title_not_in: [String]
+  status: String
+  status_not: String
+  status_in: [String]
+  status_not_in: [String]
+  photo: EventImageWhereInput
+  photo_is_null: Boolean
+  publishDate: String
+  publishDate_not: String
+  publishDate_lt: String
+  publishDate_lte: String
+  publishDate_gt: String
+  publishDate_gte: String
+  publishDate_in: [String]
+  publishDate_not_in: [String]
+  eventDate: String
+  eventDate_not: String
+  eventDate_contains: String
+  eventDate_not_contains: String
+  eventDate_starts_with: String
+  eventDate_not_starts_with: String
+  eventDate_ends_with: String
+  eventDate_not_ends_with: String
+  eventDate_i: String
+  eventDate_not_i: String
+  eventDate_contains_i: String
+  eventDate_not_contains_i: String
+  eventDate_starts_with_i: String
+  eventDate_not_starts_with_i: String
+  eventDate_ends_with_i: String
+  eventDate_not_ends_with_i: String
+  eventDate_in: [String]
+  eventDate_not_in: [String]
+  author: UserWhereInput
+  author_is_null: Boolean
+  tags_every: TagWhereInput
+  tags_some: TagWhereInput
+  tags_none: TagWhereInput
+}
+
+input EventWhereUniqueInput {
+  id: ID
+}
+
+enum SortEventsBy {
+  id_ASC
+  id_DESC
+  title_ASC
+  title_DESC
+  status_ASC
+  status_DESC
+  publishDate_ASC
+  publishDate_DESC
+  eventDate_ASC
+  eventDate_DESC
+}
+
+input EventOrderByInput {
+  id: OrderDirection
+  title: OrderDirection
+  status: OrderDirection
+  publishDate: OrderDirection
+  eventDate: OrderDirection
+}
+
+input EventUpdateInput {
+  title: String
+  status: String
+  photo: EventImageRelateToOneInput
+  content: JSON
+  publishDate: String
+  eventDate: String
+  author: UserRelateToOneInput
+  tags: TagRelateToManyInput
+}
+
+input EventImageRelateToOneInput {
+  create: EventImageCreateInput
+  connect: EventImageWhereUniqueInput
+  disconnect: EventImageWhereUniqueInput
+  disconnectAll: Boolean
+}
+
+input EventsUpdateInput {
+  id: ID!
+  data: EventUpdateInput
+}
+
+input EventCreateInput {
+  title: String
+  status: String
+  photo: EventImageRelateToOneInput
+  content: JSON
+  publishDate: String
+  eventDate: String
+  author: UserRelateToOneInput
+  tags: TagRelateToManyInput
+}
+
+input EventsCreateInput {
+  data: EventCreateInput
+}
+
+type EventImage {
+  id: ID!
+  image: CloudinaryImage_File
+  altText: String
+  event: Event
+}
+
+input EventImageWhereInput {
+  AND: [EventImageWhereInput!]
+  OR: [EventImageWhereInput!]
+  id: ID
+  id_not: ID
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  image: String
+  image_not: String
+  image_in: [String]
+  image_not_in: [String]
+  altText: String
+  altText_not: String
+  altText_contains: String
+  altText_not_contains: String
+  altText_starts_with: String
+  altText_not_starts_with: String
+  altText_ends_with: String
+  altText_not_ends_with: String
+  altText_i: String
+  altText_not_i: String
+  altText_contains_i: String
+  altText_not_contains_i: String
+  altText_starts_with_i: String
+  altText_not_starts_with_i: String
+  altText_ends_with_i: String
+  altText_not_ends_with_i: String
+  altText_in: [String]
+  altText_not_in: [String]
+  event: EventWhereInput
+  event_is_null: Boolean
+}
+
+input EventImageWhereUniqueInput {
+  id: ID
+}
+
+enum SortEventImagesBy {
+  id_ASC
+  id_DESC
+  altText_ASC
+  altText_DESC
+}
+
+input EventImageOrderByInput {
+  id: OrderDirection
+  altText: OrderDirection
+}
+
+input EventImageUpdateInput {
+  image: Upload
+  altText: String
+  event: EventRelateToOneInput
+}
+
+input EventImagesUpdateInput {
+  id: ID!
+  data: EventImageUpdateInput
+}
+
+input EventImageCreateInput {
+  image: Upload
+  altText: String
+  event: EventRelateToOneInput
+}
+
+input EventImagesCreateInput {
+  data: EventImageCreateInput
+}
+
+type Role {
+  id: ID!
+  name: String
+  canManagePosts: Boolean
+  canReadPosts: Boolean
+  canManageEvents: Boolean
+  canReadEvents: Boolean
+  canSeeOtherUsers: Boolean
+  canManageUsers: Boolean
+  canManageRoles: Boolean
+  assignedTo(
+    where: UserWhereInput! = {}
+    search: String
+    sortBy: [SortUsersBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [UserOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): [User!]
+  _assignedToMeta(
+    where: UserWhereInput! = {}
+    search: String
+    sortBy: [SortUsersBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [UserOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use assignedToCount instead."
+    )
+  assignedToCount(where: UserWhereInput! = {}): Int
+}
+
+input RoleWhereInput {
+  AND: [RoleWhereInput!]
+  OR: [RoleWhereInput!]
+  id: ID
+  id_not: ID
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  name: String
+  name_not: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  name_i: String
+  name_not_i: String
+  name_contains_i: String
+  name_not_contains_i: String
+  name_starts_with_i: String
+  name_not_starts_with_i: String
+  name_ends_with_i: String
+  name_not_ends_with_i: String
+  name_in: [String]
+  name_not_in: [String]
+  canManagePosts: Boolean
+  canManagePosts_not: Boolean
+  canReadPosts: Boolean
+  canReadPosts_not: Boolean
+  canManageEvents: Boolean
+  canManageEvents_not: Boolean
+  canReadEvents: Boolean
+  canReadEvents_not: Boolean
+  canSeeOtherUsers: Boolean
+  canSeeOtherUsers_not: Boolean
+  canManageUsers: Boolean
+  canManageUsers_not: Boolean
+  canManageRoles: Boolean
+  canManageRoles_not: Boolean
+  assignedTo_every: UserWhereInput
+  assignedTo_some: UserWhereInput
+  assignedTo_none: UserWhereInput
+}
+
+input RoleWhereUniqueInput {
+  id: ID
+}
+
+enum SortRolesBy {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  canManagePosts_ASC
+  canManagePosts_DESC
+  canReadPosts_ASC
+  canReadPosts_DESC
+  canManageEvents_ASC
+  canManageEvents_DESC
+  canReadEvents_ASC
+  canReadEvents_DESC
+  canSeeOtherUsers_ASC
+  canSeeOtherUsers_DESC
+  canManageUsers_ASC
+  canManageUsers_DESC
+  canManageRoles_ASC
+  canManageRoles_DESC
+}
+
+input RoleOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  canManagePosts: OrderDirection
+  canReadPosts: OrderDirection
+  canManageEvents: OrderDirection
+  canReadEvents: OrderDirection
+  canSeeOtherUsers: OrderDirection
+  canManageUsers: OrderDirection
+  canManageRoles: OrderDirection
+}
+
+input RoleUpdateInput {
+  name: String
+  canManagePosts: Boolean
+  canReadPosts: Boolean
+  canManageEvents: Boolean
+  canReadEvents: Boolean
+  canSeeOtherUsers: Boolean
+  canManageUsers: Boolean
+  canManageRoles: Boolean
+  assignedTo: UserRelateToManyInput
+}
+
+input UserRelateToManyInput {
+  create: [UserCreateInput]
+  connect: [UserWhereUniqueInput]
+  disconnect: [UserWhereUniqueInput]
+  disconnectAll: Boolean
+}
+
+input RolesUpdateInput {
+  id: ID!
+  data: RoleUpdateInput
+}
+
+input RoleCreateInput {
+  name: String
+  canManagePosts: Boolean
+  canReadPosts: Boolean
+  canManageEvents: Boolean
+  canReadEvents: Boolean
+  canSeeOtherUsers: Boolean
+  canManageUsers: Boolean
+  canManageRoles: Boolean
+  assignedTo: UserRelateToManyInput
+}
+
+input RolesCreateInput {
+  data: RoleCreateInput
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+  @specifiedBy(
+    url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf"
+  )
+
+type Mutation {
+  createUser(data: UserCreateInput): User
+  createUsers(data: [UsersCreateInput]): [User]
+  updateUser(id: ID!, data: UserUpdateInput): User
+  updateUsers(data: [UsersUpdateInput]): [User]
+  deleteUser(id: ID!): User
+  deleteUsers(ids: [ID!]): [User]
+  createPost(data: PostCreateInput): Post
+  createPosts(data: [PostsCreateInput]): [Post]
+  updatePost(id: ID!, data: PostUpdateInput): Post
+  updatePosts(data: [PostsUpdateInput]): [Post]
+  deletePost(id: ID!): Post
+  deletePosts(ids: [ID!]): [Post]
+  createTag(data: TagCreateInput): Tag
+  createTags(data: [TagsCreateInput]): [Tag]
+  updateTag(id: ID!, data: TagUpdateInput): Tag
+  updateTags(data: [TagsUpdateInput]): [Tag]
+  deleteTag(id: ID!): Tag
+  deleteTags(ids: [ID!]): [Tag]
+  createPostImage(data: PostImageCreateInput): PostImage
+  createPostImages(data: [PostImagesCreateInput]): [PostImage]
+  updatePostImage(id: ID!, data: PostImageUpdateInput): PostImage
+  updatePostImages(data: [PostImagesUpdateInput]): [PostImage]
+  deletePostImage(id: ID!): PostImage
+  deletePostImages(ids: [ID!]): [PostImage]
+  createEvent(data: EventCreateInput): Event
+  createEvents(data: [EventsCreateInput]): [Event]
+  updateEvent(id: ID!, data: EventUpdateInput): Event
+  updateEvents(data: [EventsUpdateInput]): [Event]
+  deleteEvent(id: ID!): Event
+  deleteEvents(ids: [ID!]): [Event]
+  createEventImage(data: EventImageCreateInput): EventImage
+  createEventImages(data: [EventImagesCreateInput]): [EventImage]
+  updateEventImage(id: ID!, data: EventImageUpdateInput): EventImage
+  updateEventImages(data: [EventImagesUpdateInput]): [EventImage]
+  deleteEventImage(id: ID!): EventImage
+  deleteEventImages(ids: [ID!]): [EventImage]
+  createRole(data: RoleCreateInput): Role
+  createRoles(data: [RolesCreateInput]): [Role]
+  updateRole(id: ID!, data: RoleUpdateInput): Role
+  updateRoles(data: [RolesUpdateInput]): [Role]
+  deleteRole(id: ID!): Role
+  deleteRoles(ids: [ID!]): [Role]
+  authenticateUserWithPassword(
+    email: String!
+    password: String!
+  ): UserAuthenticationWithPasswordResult!
+  createInitialUser(
+    data: CreateInitialUserInput!
+  ): UserAuthenticationWithPasswordSuccess!
+  endSession: Boolean!
+}
+
+union AuthenticatedItem = User
+
+union UserAuthenticationWithPasswordResult =
+    UserAuthenticationWithPasswordSuccess
+  | UserAuthenticationWithPasswordFailure
+
+type UserAuthenticationWithPasswordSuccess {
+  sessionToken: String!
+  item: User!
+}
+
+type UserAuthenticationWithPasswordFailure {
+  code: PasswordAuthErrorCode!
+  message: String!
+}
+
+enum PasswordAuthErrorCode {
+  FAILURE
+  IDENTITY_NOT_FOUND
+  SECRET_NOT_SET
+  MULTIPLE_IDENTITY_MATCHES
+  SECRET_MISMATCH
+}
+
+input CreateInitialUserInput {
+  name: String
+  email: String
+  password: String
+}
+
+type Query {
+  allUsers(
+    where: UserWhereInput! = {}
+    search: String
+    sortBy: [SortUsersBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [UserOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): [User!]
+  User(where: UserWhereUniqueInput!): User
+  _allUsersMeta(
+    where: UserWhereInput! = {}
+    search: String
+    sortBy: [SortUsersBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [UserOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use usersCount instead."
+    )
+  usersCount(where: UserWhereInput! = {}): Int
+  allPosts(
+    where: PostWhereInput! = {}
+    search: String
+    sortBy: [SortPostsBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [PostOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): [Post!]
+  Post(where: PostWhereUniqueInput!): Post
+  _allPostsMeta(
+    where: PostWhereInput! = {}
+    search: String
+    sortBy: [SortPostsBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [PostOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use postsCount instead."
+    )
+  postsCount(where: PostWhereInput! = {}): Int
+  allTags(
+    where: TagWhereInput! = {}
+    search: String
+    sortBy: [SortTagsBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [TagOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): [Tag!]
+  Tag(where: TagWhereUniqueInput!): Tag
+  _allTagsMeta(
+    where: TagWhereInput! = {}
+    search: String
+    sortBy: [SortTagsBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [TagOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use tagsCount instead."
+    )
+  tagsCount(where: TagWhereInput! = {}): Int
+  allPostImages(
+    where: PostImageWhereInput! = {}
+    search: String
+    sortBy: [SortPostImagesBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [PostImageOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): [PostImage!]
+  PostImage(where: PostImageWhereUniqueInput!): PostImage
+  _allPostImagesMeta(
+    where: PostImageWhereInput! = {}
+    search: String
+    sortBy: [SortPostImagesBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [PostImageOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use postImagesCount instead."
+    )
+  postImagesCount(where: PostImageWhereInput! = {}): Int
+  allEvents(
+    where: EventWhereInput! = {}
+    search: String
+    sortBy: [SortEventsBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [EventOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): [Event!]
+  Event(where: EventWhereUniqueInput!): Event
+  _allEventsMeta(
+    where: EventWhereInput! = {}
+    search: String
+    sortBy: [SortEventsBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [EventOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use eventsCount instead."
+    )
+  eventsCount(where: EventWhereInput! = {}): Int
+  allEventImages(
+    where: EventImageWhereInput! = {}
+    search: String
+    sortBy: [SortEventImagesBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [EventImageOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): [EventImage!]
+  EventImage(where: EventImageWhereUniqueInput!): EventImage
+  _allEventImagesMeta(
+    where: EventImageWhereInput! = {}
+    search: String
+    sortBy: [SortEventImagesBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [EventImageOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use eventImagesCount instead."
+    )
+  eventImagesCount(where: EventImageWhereInput! = {}): Int
+  allRoles(
+    where: RoleWhereInput! = {}
+    search: String
+    sortBy: [SortRolesBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [RoleOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): [Role!]
+  Role(where: RoleWhereUniqueInput!): Role
+  _allRolesMeta(
+    where: RoleWhereInput! = {}
+    search: String
+    sortBy: [SortRolesBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [RoleOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use rolesCount instead."
+    )
+  rolesCount(where: RoleWhereInput! = {}): Int
+  authenticatedItem: AuthenticatedItem
+  keystone: KeystoneMeta!
+}
+
+type KeystoneMeta {
+  adminMeta: KeystoneAdminMeta!
+}
+
+type KeystoneAdminMeta {
+  enableSignout: Boolean!
+  enableSessionItem: Boolean!
+  lists: [KeystoneAdminUIListMeta!]!
+  list(key: String!): KeystoneAdminUIListMeta
+}
+
+type KeystoneAdminUIListMeta {
+  key: String!
+  itemQueryName: String!
+  listQueryName: String!
+  hideCreate: Boolean!
+  hideDelete: Boolean!
+  path: String!
+  label: String!
+  singular: String!
+  plural: String!
+  description: String
+  initialColumns: [String!]!
+  pageSize: Int!
+  labelField: String!
+  fields: [KeystoneAdminUIFieldMeta!]!
+  initialSort: KeystoneAdminUISort
+  isHidden: Boolean!
+}
+
+type KeystoneAdminUIFieldMeta {
+  path: String!
+  label: String!
+  isOrderable: Boolean!
+  fieldMeta: JSON
+  viewsIndex: Int!
+  customViewsIndex: Int
+  createView: KeystoneAdminUIFieldMetaCreateView!
+  listView: KeystoneAdminUIFieldMetaListView!
+  itemView(id: ID!): KeystoneAdminUIFieldMetaItemView
+  search: QueryMode
+}
+
+type KeystoneAdminUIFieldMetaCreateView {
+  fieldMode: KeystoneAdminUIFieldMetaCreateViewFieldMode!
+}
+
+enum KeystoneAdminUIFieldMetaCreateViewFieldMode {
+  edit
+  hidden
+}
+
+type KeystoneAdminUIFieldMetaListView {
+  fieldMode: KeystoneAdminUIFieldMetaListViewFieldMode!
+}
+
+enum KeystoneAdminUIFieldMetaListViewFieldMode {
+  read
+  hidden
+}
+
+type KeystoneAdminUIFieldMetaItemView {
+  fieldMode: KeystoneAdminUIFieldMetaItemViewFieldMode!
+}
+
+enum KeystoneAdminUIFieldMetaItemViewFieldMode {
+  edit
+  read
+  hidden
+}
+
+enum QueryMode {
+  default
+  insensitive
+}
+
+type KeystoneAdminUISort {
+  field: String!
+  direction: KeystoneAdminUISortDirection!
+}
+
+enum KeystoneAdminUISortDirection {
+  ASC
+  DESC
+}
