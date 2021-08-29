@@ -5,17 +5,9 @@ export const permissionFields = {
     defaultValue: false,
     label: "User can update and delete any post",
   }),
-  canReadPosts: checkbox({
-    defaultValue: true,
-    label: "Any logged in user can read other posts",
-  }),
   canManageEvents: checkbox({
     defaultValue: false,
     label: "User can update and delete any event",
-  }),
-  canReadEvents: checkbox({
-    defaultValue: true,
-    label: "Any logged in user can read other events",
   }),
   canSeeOtherUsers: checkbox({
     defaultValue: false,

@@ -43,7 +43,6 @@ export const lists = createSchema({
       email: text({ isRequired: true, isUnique: true }),
       password: password({ isRequired: true }),
       posts: relationship({ ref: "Post.author", many: true }),
-      events: relationship({ ref: "Event.author" }),
       role: relationship({
         ref: "Role.assignedTo",
         access: {
@@ -61,7 +60,7 @@ export const lists = createSchema({
   Post: list({
     access: {
       create: isSignedIn,
-      read: rules.canReadPosts,
+      read: rules.canManagePosts,
       update: rules.canManagePosts,
       delete: rules.canManagePosts,
     },
@@ -132,10 +131,6 @@ export const lists = createSchema({
         ref: "Post.tags",
         many: true,
       }),
-      events: relationship({
-        ref: "Event.tags",
-        many: true,
-      }),
     },
   }),
   PostImage: list({
@@ -156,92 +151,6 @@ export const lists = createSchema({
     ui: {
       listView: {
         initialColumns: ["image", "altText", "post"],
-      },
-    },
-  }),
-  Event: list({
-    access: {
-      create: isSignedIn,
-      read: rules.canReadEvents,
-      update: rules.canOverseeEvents,
-      delete: rules.canOverseeEvents,
-    },
-    fields: {
-      title: text(),
-      status: select({
-        options: [
-          { label: "Published", value: "published" },
-          { label: "Draft", value: "draft" },
-        ],
-        ui: {
-          displayMode: "segmented-control",
-        },
-      }),
-      photo: relationship({
-        ref: "EventImage.event",
-        ui: {
-          displayMode: "cards",
-          cardFields: ["image", "altText"],
-          inlineCreate: { fields: ["image", "altText"] },
-          inlineEdit: { fields: ["image", "altText"] },
-        },
-      }),
-      content: document({
-        formatting: true,
-        layouts: [
-          [1, 1],
-          [1, 1, 1],
-          [2, 1],
-          [1, 2],
-          [1, 2, 1],
-        ],
-        links: true,
-        dividers: true,
-      }),
-      publishDate: timestamp(),
-      eventDate: text(),
-      author: relationship({
-        ref: "User.events",
-        ui: {
-          displayMode: "cards",
-          cardFields: ["name", "email"],
-          inlineEdit: { fields: ["name", "email"] },
-          linkToItem: true,
-          inlineCreate: { fields: ["name", "email"] },
-        },
-      }),
-      tags: relationship({
-        ref: "Tag.events",
-        ui: {
-          displayMode: "cards",
-          cardFields: ["name"],
-          inlineEdit: { fields: ["name"] },
-          linkToItem: true,
-          inlineConnect: true,
-          inlineCreate: { fields: ["name"] },
-        },
-        many: true,
-      }),
-    },
-  }),
-  EventImage: list({
-    access: {
-      create: isSignedIn,
-      read: () => true,
-      update: permissions.canManageEvents,
-      delete: permissions.canManageEvents,
-    },
-    fields: {
-      image: cloudinaryImage({
-        cloudinary,
-        label: "Source",
-      }),
-      altText: text(),
-      event: relationship({ ref: "Event.photo" }),
-    },
-    ui: {
-      listView: {
-        initialColumns: ["image", "altText", "event"],
       },
     },
   }),

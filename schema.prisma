@@ -14,7 +14,6 @@ model User {
   email    String? @unique
   password String?
   posts    Post[]  @relation("Post_author")
-  events   Event?  @relation("Event_author")
   role     Role?   @relation("User_role", fields: [roleId], references: [id])
   roleId   String? @map("role")
 
@@ -37,10 +36,9 @@ model Post {
 }
 
 model Tag {
-  id     String  @id @default(cuid())
-  name   String?
-  posts  Post[]  @relation("Post_tags_Tag_posts")
-  events Event[] @relation("Event_tags_Tag_events")
+  id    String  @id @default(cuid())
+  name  String?
+  posts Post[]  @relation("Post_tags_Tag_posts")
 }
 
 model PostImage {
@@ -50,34 +48,11 @@ model PostImage {
   post    Post?   @relation("Post_photo")
 }
 
-model Event {
-  id          String      @id @default(cuid())
-  title       String?
-  status      String?
-  photo       EventImage? @relation("Event_photo", fields: [photoId], references: [id])
-  photoId     String?     @unique @map("photo")
-  content     Json?
-  publishDate DateTime?
-  eventDate   String?
-  author      User?       @relation("Event_author", fields: [authorId], references: [id])
-  authorId    String?     @unique @map("author")
-  tags        Tag[]       @relation("Event_tags_Tag_events")
-}
-
-model EventImage {
-  id      String  @id @default(cuid())
-  image   Json?
-  altText String?
-  event   Event?  @relation("Event_photo")
-}
-
 model Role {
   id               String   @id @default(cuid())
   name             String?
   canManagePosts   Boolean?
-  canReadPosts     Boolean?
   canManageEvents  Boolean?
-  canReadEvents    Boolean?
   canSeeOtherUsers Boolean?
   canManageUsers   Boolean?
   canManageRoles   Boolean?

@@ -52,16 +52,6 @@ export const rules = {
       return true;
     }
   },
-  canReadPosts({ session }: ListAccessArgs) {
-    if (!isSignedIn({ session })) {
-      return false;
-    }
-    if (permissions.canReadPosts({ session })) {
-      return true; // They can read everything!
-    }
-    // They should only see available products (based on the status field)
-    return { status: "Published" };
-  },
   canOverseeRoles({ session }: ListAccessArgs) {
     if (!isSignedIn({ session })) {
       return false;
@@ -70,16 +60,6 @@ export const rules = {
       return true;
     }
     return { id: session?.itemId };
-  },
-  canReadEvents({ session }: ListAccessArgs) {
-    if (!isSignedIn({ session })) {
-      return false;
-    }
-    if (permissions.canReadEvents({ session })) {
-      return true; // They can read everything!
-    }
-    // They should only see available products (based on the status field)
-    return { status: "Published" };
   },
   canOverseeEvents({ session }: ListAccessArgs) {
     if (!isSignedIn({ session })) {
