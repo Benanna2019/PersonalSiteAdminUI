@@ -154,6 +154,11 @@ export const lists = createSchema({
       },
     },
   }),
+  BlogIdea: list({
+    fields: {
+      name: text(),
+    },
+  }),
   Role: list({
     access: {
       create: permissions.canManageRoles,

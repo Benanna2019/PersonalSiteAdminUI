@@ -48,6 +48,11 @@ model PostImage {
   post    Post?   @relation("Post_photo")
 }
 
+model BlogIdea {
+  id   String  @id @default(cuid())
+  name String?
+}
+
 model Role {
   id               String   @id @default(cuid())
   name             String?
