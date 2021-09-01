@@ -49,8 +49,16 @@ model PostImage {
 }
 
 model BlogIdea {
-  id   String  @id @default(cuid())
-  name String?
+  id       String            @id @default(cuid())
+  name     String?
+  keywords BlogIdeaKeyword[] @relation("BlogIdea_keywords_BlogIdeaKeyword_keywords")
+}
+
+model BlogIdeaKeyword {
+  id       String     @id @default(cuid())
+  name     String?
+  score    Int?
+  keywords BlogIdea[] @relation("BlogIdea_keywords_BlogIdeaKeyword_keywords")
 }
 
 model Role {

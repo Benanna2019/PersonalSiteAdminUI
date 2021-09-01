@@ -7,6 +7,7 @@ import {
   timestamp,
   select,
   checkbox,
+  integer,
 } from "@keystone-next/fields";
 import "dotenv/config";
 import { document } from "@keystone-next/fields-document";
@@ -157,6 +158,31 @@ export const lists = createSchema({
   BlogIdea: list({
     fields: {
       name: text(),
+      keywords: relationship({
+        ref: "BlogIdeaKeyword.keywords",
+        ui: {
+          displayMode: "cards",
+          cardFields: ["name", "score"],
+          inlineEdit: { fields: ["name", "score"] },
+          linkToItem: true,
+          inlineConnect: true,
+          inlineCreate: { fields: ["name", "score"] },
+        },
+        many: true,
+      }),
+    },
+  }),
+  BlogIdeaKeyword: list({
+    ui: {
+      isHidden: true,
+    },
+    fields: {
+      name: text(),
+      score: integer(),
+      keywords: relationship({
+        ref: "BlogIdea.keywords",
+        many: true,
+      }),
     },
   }),
   Role: list({

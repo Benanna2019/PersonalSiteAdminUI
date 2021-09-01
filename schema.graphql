@@ -554,6 +554,28 @@ input PostImagesCreateInput {
 type BlogIdea {
   id: ID!
   name: String
+  keywords(
+    where: BlogIdeaKeywordWhereInput! = {}
+    search: String
+    sortBy: [SortBlogIdeaKeywordsBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [BlogIdeaKeywordOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): [BlogIdeaKeyword!]
+  _keywordsMeta(
+    where: BlogIdeaKeywordWhereInput! = {}
+    search: String
+    sortBy: [SortBlogIdeaKeywordsBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [BlogIdeaKeywordOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use keywordsCount instead."
+    )
+  keywordsCount(where: BlogIdeaKeywordWhereInput! = {}): Int
 }
 
 input BlogIdeaWhereInput {
@@ -585,6 +607,9 @@ input BlogIdeaWhereInput {
   name_not_ends_with_i: String
   name_in: [String]
   name_not_in: [String]
+  keywords_every: BlogIdeaKeywordWhereInput
+  keywords_some: BlogIdeaKeywordWhereInput
+  keywords_none: BlogIdeaKeywordWhereInput
 }
 
 input BlogIdeaWhereUniqueInput {
@@ -605,6 +630,14 @@ input BlogIdeaOrderByInput {
 
 input BlogIdeaUpdateInput {
   name: String
+  keywords: BlogIdeaKeywordRelateToManyInput
+}
+
+input BlogIdeaKeywordRelateToManyInput {
+  create: [BlogIdeaKeywordCreateInput]
+  connect: [BlogIdeaKeywordWhereUniqueInput]
+  disconnect: [BlogIdeaKeywordWhereUniqueInput]
+  disconnectAll: Boolean
 }
 
 input BlogIdeasUpdateInput {
@@ -614,10 +647,128 @@ input BlogIdeasUpdateInput {
 
 input BlogIdeaCreateInput {
   name: String
+  keywords: BlogIdeaKeywordRelateToManyInput
 }
 
 input BlogIdeasCreateInput {
   data: BlogIdeaCreateInput
+}
+
+type BlogIdeaKeyword {
+  id: ID!
+  name: String
+  score: Int
+  keywords(
+    where: BlogIdeaWhereInput! = {}
+    search: String
+    sortBy: [SortBlogIdeasBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [BlogIdeaOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): [BlogIdea!]
+  _keywordsMeta(
+    where: BlogIdeaWhereInput! = {}
+    search: String
+    sortBy: [SortBlogIdeasBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [BlogIdeaOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use keywordsCount instead."
+    )
+  keywordsCount(where: BlogIdeaWhereInput! = {}): Int
+}
+
+input BlogIdeaKeywordWhereInput {
+  AND: [BlogIdeaKeywordWhereInput!]
+  OR: [BlogIdeaKeywordWhereInput!]
+  id: ID
+  id_not: ID
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  name: String
+  name_not: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  name_i: String
+  name_not_i: String
+  name_contains_i: String
+  name_not_contains_i: String
+  name_starts_with_i: String
+  name_not_starts_with_i: String
+  name_ends_with_i: String
+  name_not_ends_with_i: String
+  name_in: [String]
+  name_not_in: [String]
+  score: Int
+  score_not: Int
+  score_lt: Int
+  score_lte: Int
+  score_gt: Int
+  score_gte: Int
+  score_in: [Int]
+  score_not_in: [Int]
+  keywords_every: BlogIdeaWhereInput
+  keywords_some: BlogIdeaWhereInput
+  keywords_none: BlogIdeaWhereInput
+}
+
+input BlogIdeaKeywordWhereUniqueInput {
+  id: ID
+}
+
+enum SortBlogIdeaKeywordsBy {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  score_ASC
+  score_DESC
+}
+
+input BlogIdeaKeywordOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  score: OrderDirection
+}
+
+input BlogIdeaKeywordUpdateInput {
+  name: String
+  score: Int
+  keywords: BlogIdeaRelateToManyInput
+}
+
+input BlogIdeaRelateToManyInput {
+  create: [BlogIdeaCreateInput]
+  connect: [BlogIdeaWhereUniqueInput]
+  disconnect: [BlogIdeaWhereUniqueInput]
+  disconnectAll: Boolean
+}
+
+input BlogIdeaKeywordsUpdateInput {
+  id: ID!
+  data: BlogIdeaKeywordUpdateInput
+}
+
+input BlogIdeaKeywordCreateInput {
+  name: String
+  score: Int
+  keywords: BlogIdeaRelateToManyInput
+}
+
+input BlogIdeaKeywordsCreateInput {
+  data: BlogIdeaKeywordCreateInput
 }
 
 type Role {
@@ -802,6 +953,15 @@ type Mutation {
   updateBlogIdeas(data: [BlogIdeasUpdateInput]): [BlogIdea]
   deleteBlogIdea(id: ID!): BlogIdea
   deleteBlogIdeas(ids: [ID!]): [BlogIdea]
+  createBlogIdeaKeyword(data: BlogIdeaKeywordCreateInput): BlogIdeaKeyword
+  createBlogIdeaKeywords(data: [BlogIdeaKeywordsCreateInput]): [BlogIdeaKeyword]
+  updateBlogIdeaKeyword(
+    id: ID!
+    data: BlogIdeaKeywordUpdateInput
+  ): BlogIdeaKeyword
+  updateBlogIdeaKeywords(data: [BlogIdeaKeywordsUpdateInput]): [BlogIdeaKeyword]
+  deleteBlogIdeaKeyword(id: ID!): BlogIdeaKeyword
+  deleteBlogIdeaKeywords(ids: [ID!]): [BlogIdeaKeyword]
   createRole(data: RoleCreateInput): Role
   createRoles(data: [RolesCreateInput]): [Role]
   updateRole(id: ID!, data: RoleUpdateInput): Role
@@ -964,6 +1124,29 @@ type Query {
       reason: "This query will be removed in a future version. Please use blogIdeasCount instead."
     )
   blogIdeasCount(where: BlogIdeaWhereInput! = {}): Int
+  allBlogIdeaKeywords(
+    where: BlogIdeaKeywordWhereInput! = {}
+    search: String
+    sortBy: [SortBlogIdeaKeywordsBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [BlogIdeaKeywordOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): [BlogIdeaKeyword!]
+  BlogIdeaKeyword(where: BlogIdeaKeywordWhereUniqueInput!): BlogIdeaKeyword
+  _allBlogIdeaKeywordsMeta(
+    where: BlogIdeaKeywordWhereInput! = {}
+    search: String
+    sortBy: [SortBlogIdeaKeywordsBy!]
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [BlogIdeaKeywordOrderByInput!]! = []
+    first: Int
+    skip: Int! = 0
+  ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use blogIdeaKeywordsCount instead."
+    )
+  blogIdeaKeywordsCount(where: BlogIdeaKeywordWhereInput! = {}): Int
   allRoles(
     where: RoleWhereInput! = {}
     search: String
