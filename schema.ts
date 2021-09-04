@@ -25,7 +25,6 @@ export const lists = createSchema({
   User: list({
     access: {
       create: () => true,
-      read: rules.canOverseeUsers,
       update: rules.canOverseeUsers,
       // only people with the permission can delete themselves!
       // You can't delete yourself
@@ -59,12 +58,12 @@ export const lists = createSchema({
     },
   }),
   Post: list({
-    access: {
-      create: isSignedIn,
-      read: rules.canManagePosts,
-      update: rules.canManagePosts,
-      delete: rules.canManagePosts,
-    },
+    // access: {
+    //   create: isSignedIn,
+    //   read: rules.canManagePosts,
+    //   update: rules.canManagePosts,
+    //   delete: rules.canManagePosts,
+    // },
     fields: {
       title: text(),
       status: select({
@@ -135,12 +134,12 @@ export const lists = createSchema({
     },
   }),
   PostImage: list({
-    access: {
-      create: isSignedIn,
-      read: () => true,
-      update: permissions.canManagePosts,
-      delete: permissions.canManagePosts,
-    },
+    // access: {
+    //   create: isSignedIn,
+    //   read: () => true,
+    //   update: permissions.canManagePosts,
+    //   delete: permissions.canManagePosts,
+    // },
     fields: {
       image: cloudinaryImage({
         cloudinary,

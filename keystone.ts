@@ -42,6 +42,12 @@ const sessionConfig = {
 
 export default withAuth(
   config({
+    server: {
+      cors: {
+        origin: [`${process.env.FRONTEND_URL}`],
+        credentials: true,
+      },
+    },
     db: {
       adapter: "prisma_postgresql",
       url: `${process.env.DATABASE_URL}`,
